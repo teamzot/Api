@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_14_201513) do
+ActiveRecord::Schema.define(version: 2018_10_14_212112) do
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -28,7 +29,7 @@ ActiveRecord::Schema.define(version: 2018_10_14_201513) do
     t.integer "experience"
     t.integer "experience_level"
     t.boolean "greencard"
-    t.integer "job_function"
+    t.string "job_function"
     t.integer "job_type"
     t.integer "level"
     t.string "other_offer"
@@ -43,6 +44,8 @@ ActiveRecord::Schema.define(version: 2018_10_14_201513) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "company_id"
+    t.integer "year"
+    t.integer "base_salary"
   end
 
 end

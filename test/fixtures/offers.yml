@@ -13,7 +13,7 @@
 #  experience        :integer
 #  experience_level  :integer
 #  greencard         :boolean
-#  job_function      :integer
+#  job_function      :string(255)
 #  job_type          :integer
 #  level             :integer
 #  other_offer       :string(255)
@@ -28,6 +28,8 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  company_id        :integer
+#  year              :integer
+#  base_salary       :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
