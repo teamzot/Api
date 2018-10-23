@@ -44,4 +44,5 @@ class Offer < ApplicationRecord
     enum source: [:headhunter, :refer, :resume, :return, :other_srcs]
 
     belongs_to :company
+    belongs_to :offerable, polymorphic: true
 end
