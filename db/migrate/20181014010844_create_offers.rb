@@ -6,25 +6,25 @@ class CreateOffers < ActiveRecord::Migration[5.2]
       t.boolean :satisfaction
       
       t.integer :annual_refresh
-      t.integer :area
-      t.integer :degree
+      t.string :area
+      t.string :degree
       t.string :equity_schedule
-      t.integer :experience
-      t.integer :experience_level
+      t.string :experience
+      t.string :experience_level
       t.boolean :greencard
       
-      t.integer :job_function
-      t.integer :job_type
+      t.string :job_function
+      t.string :job_type
       t.integer :level
 
       t.string :other_offer
-      t.integer :position_type
+      t.string :position_type
       t.datetime :post_time
 
       t.string :promotion_package
       t.integer :relocation_fee
-      t.integer :season
-      t.integer :source
+      t.string :season
+      t.integer :string
 
       t.datetime :spider_time
       t.text :url

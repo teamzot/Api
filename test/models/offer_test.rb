@@ -4,25 +4,24 @@
 #
 #  id                :bigint(8)        not null, primary key
 #  post_title        :string(255)
-#  post_user         :string(255)
 #  satisfaction      :boolean
 #  annual_refresh    :integer
-#  area              :integer
-#  degree            :integer
+#  area              :string(255)
+#  degree            :string(255)
 #  equity_schedule   :string(255)
-#  experience        :integer
-#  experience_level  :integer
+#  experience        :string(255)
+#  experience_level  :string(255)
 #  greencard         :boolean
 #  job_function      :string(255)
-#  job_type          :integer
+#  job_type          :string(255)
 #  level             :integer
 #  other_offer       :string(255)
-#  position_type     :integer
+#  position_type     :string(255)
 #  post_time         :datetime
 #  promotion_package :string(255)
 #  relocation_fee    :integer
-#  season            :integer
-#  source            :integer
+#  season            :string(255)
+#  string            :integer
 #  spider_time       :datetime
 #  url               :text(65535)
 #  created_at        :datetime         not null
@@ -30,6 +29,9 @@
 #  company_id        :integer
 #  year              :integer
 #  base_salary       :integer
+#  offerable_type    :string(255)
+#  offerable_id      :integer
+#  source_id         :integer
 #
 
 require 'test_helper'
