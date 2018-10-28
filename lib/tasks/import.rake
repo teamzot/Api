@@ -1,51 +1,46 @@
 namespace :import do
     task :csv1 => :environment do
-        filename = 'source/DataClean2.csv'
-        file = File.new(filename, 'r')
-        line = 0
-        file.each_line("\n") do |row|
-            line += 1
-            next if line == 1
-            columns = row.split(",")
-            # fetch raw
-            annual_refresh = columns[0].strip
-            area = columns[1].strip
-            base_salary = columns[3].strip
+        filename = "source/DataClean2.csv"
+        data = SmarterCSV.process(filename)
+        data.each do |row|
+            annual_refresh = row[:annualrefresh]
+            area = row[:area]
+            base_salary = row[:basesalaryannualusd]
 
-            company_alt_name = columns[4].strip
-            company_name = columns[5].strip
+            company_alt_name = row[:companyaltname]
+            company_name = row[:companyname]
 
-            degree = columns[6].strip
-            equity = columns[7].strip
-            equity_schedule = columns[8].strip
-            experience = columns[9].strip
-            experience_level = columns[10].strip
-            greencard = columns[11].strip
+            degree = row[:degree]
+            equity = row[:equity]
+            equity_schedule = row[:equityschedule]
+            experience = row[:experience]
+            experience_level = row[:experiencelevel]
+            greencard = row[:greencard]
 
-            group = columns[12].strip
-            interest_point = columns[13].strip
-            job_function = columns[14].strip
-            job_type = columns[15].strip
-            level = columns[16].strip
+            group = row[:group]
+            interest_point = row[:interestpoint]
+            job_function = row[:jobfunction]
+            job_type = row[:jobtype]
+            level = row[:level]
 
-            other_offer = columns[17].strip
-            position_type = columns[18].strip
-            post_time = columns[20].strip
-            post_title = columns[21].strip
-            post_user = columns[22].strip
+            other_offer = row[:otherlevel]
+            position_type = row[:positiontype]
+            post_time = row[:posttime]
+            post_title = row[:posttitle]
+            post_user = row[:postuser]
 
-            promotion_pkg = columns[23].strip
-            relocation_fee = columns[24].strip
-            satisfaction = columns[25].strip
-            season = columns[26].strip
-            sign_bonus = columns[27].strip
+            promotion_pkg = row[:promotionpkg]
+            relocation_fee = row[:relocationfee]
+            satisfaction = row[:satisfaction]
+            season = row[:season]
+            sign_bonus = row[:signbonus]
 
-            apply_source = columns[28].strip
-            spider_time = columns[29].strip
-            title = columns[30].strip
-            url = columns[31].strip
-            year = columns[32].strip
-            yearly_bonus = columns[33].strip
+            apply_source = row[:source]
+            spider_time = row[:spidertime]
+            title = row[:title]
+            url = row[:url]
+            year = row[:year]
+            yearly_bonus = row[:yearlybonus]
             
             # process data
             begin
@@ -55,20 +50,26 @@ namespace :import do
             end
     
             company_name = company_name != "-" ? company_name : company_alt_name
-            next if company_name == "-" || company_name == ""
+            company_name = "-" if company_name == "-" || company_name == "" || !company_name 
             
             level = level.to_i
 
             # remove month
-            season = season[0..-2]
-
-            begin
-                post_time = post_time.to_datetime
-            rescue ArgumentError
-                post_time = nil
+            if season
+                season = season[0..-2]
             end
 
-            year = year.to_i
+            if post_time
+                begin
+                    post_time = post_time.to_datetime
+                rescue ArgumentError
+                    post_time = nil
+                end
+            end
+
+            if year
+                year = year.to_i
+            end
 
             # relationship
             company = Company.find_or_create_by(name: company_name)

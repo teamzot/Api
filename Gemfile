@@ -31,6 +31,8 @@ gem 'jbuilder', '~> 2.5'
 # for registration
 gem 'devise'
 gem 'doorkeeper'
+# csv
+gem 'smarter_csv'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
