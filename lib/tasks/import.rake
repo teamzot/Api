@@ -7,7 +7,6 @@ namespace :import do
             line += 1
             next if line == 1
             columns = row.split(",")
-            
             # fetch raw
             annual_refresh = columns[0].strip
             area = columns[1].strip
@@ -78,6 +77,7 @@ namespace :import do
             post_user.offers.create(
                 # relationship
                 company_id: company.id,
+                source_id: 1,
                 # start columns
                 post_title: post_title,
                 annual_refresh: annual_refresh,
