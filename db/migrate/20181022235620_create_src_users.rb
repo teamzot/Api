@@ -5,6 +5,8 @@ class CreateSrcUsers < ActiveRecord::Migration[5.2]
       t.integer :source_id
 
       t.timestamps
+
+      t.index ["name"]
     end
   end
 end
