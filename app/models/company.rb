@@ -9,5 +9,6 @@
 #
 
 class Company < ApplicationRecord
+    scope :by_name, -> name { where(name: name) }
     has_many :offers
 end

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :companies, only: [:index]
+      resources :companies, only: [:index, :show]
 
       use_doorkeeper
       use_doorkeeper do

@@ -34,6 +34,9 @@ gem 'doorkeeper'
 # csv
 gem 'smarter_csv'
 
+# scoping
+gem 'has_scope'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
