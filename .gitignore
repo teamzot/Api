@@ -32,3 +32,4 @@
 
 # Ignore database.yml
 /config/database.yml
+/config/secrets.yml
