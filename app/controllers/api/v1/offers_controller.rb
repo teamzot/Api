@@ -27,7 +27,7 @@ class Api::V1::OffersController < ApplicationController
     has_scope :by_company_name
 
     def index
-        @offers = apply_scopes(Offer).all
+        @offers = apply_scopes(Offer).joins(:company).all
         if query_params[:offset]
             @offers  = @offers.offset(query_params[:offset].to_i)
         end
@@ -35,9 +35,11 @@ class Api::V1::OffersController < ApplicationController
         if query_params[:limit]
             @offers  = @offers.limit(query_params[:limit].to_i)
         end
-
+        
         if query_params[:list_id]
             @offers  = @offers.pluck(:id)
+        else
+            @offers = @offers.select("offers.*, companies.name AS company_name")
         end
 
         render json: { offers: @offers } 
