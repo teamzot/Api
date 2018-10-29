@@ -20,7 +20,7 @@ class Api::V1::OffersController < ApplicationController
     def show
         if  Offer.exists?(params[:id])
             @offer = Offer.find(params[:id])
-            render json: { success: false, offer: @offer }
+            render json: { success: true, offer: @offer }
         else
             render json: { success: false }
         end
