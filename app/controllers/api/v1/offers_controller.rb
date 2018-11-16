@@ -1,4 +1,6 @@
 class Api::V1::OffersController < ApplicationController
+    before_action :doorkeeper_authorize!, only: [:delete]
+
     has_scope :by_annual_refresh
     has_scope :by_area
     has_scope :by_degree
@@ -57,6 +59,10 @@ class Api::V1::OffersController < ApplicationController
         else
             render json: { success: false }
         end
+    end
+
+    def delete
+        render json: { success: true, id: params[:id] }
     end
 
     def get_params

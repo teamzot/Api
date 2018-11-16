@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  use_doorkeeper do
+    # No need to register client application
+    skip_controllers :applications, :authorized_applications
+  end
+
   namespace :api do
     namespace :v1 do
-      resources :offers, only: [:index, :show] do
+      resources :offers, only: [:index, :show, :delete] do
         collection do
           get 'get_params'
         end
@@ -9,11 +14,10 @@ Rails.application.routes.draw do
 
       resources :companies, only: [:index, :show]
 
-      use_doorkeeper
-      use_doorkeeper do
-        # No need to register client application
-        skip_controllers :applications, :authorized_applications, :offers
-      end
+      # use_doorkeeper do
+      #   # No need to register client application
+      #   skip_controllers :applications, :authorized_applications, :offers
+      # end
       # api use only
       devise_for :users, controllers: {
         registrations: 'api/v1/users/registrations',
