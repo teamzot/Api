@@ -67,3 +67,14 @@ Query string
 #  yearly_bonus      :string(255)
 #  apply_source      :string(255)
 ```
+
+## Authentication System
+# Get token
+```
+http://localhost:3000/oauth/token
+```
+
+# Authentcate with restricted sources
+```
+http://localhost:3000/api/v1/offers/1?access_token=<token>
+```

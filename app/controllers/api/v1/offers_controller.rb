@@ -1,5 +1,6 @@
 class Api::V1::OffersController < ApplicationController
-    before_action :doorkeeper_authorize!, only: [:delete]
+    before_action :doorkeeper_authorize!, only: [:destroy, :create]
+    before_action :check_admin, only: [:destroy, :create]
 
     has_scope :by_annual_refresh
     has_scope :by_area
@@ -48,7 +49,7 @@ class Api::V1::OffersController < ApplicationController
     end
     
     def show
-        if  Offer.exists?(params[:id])
+        if Offer.exists?(params[:id])
             @offer = Offer.find(params[:id])
             json_obj = @offer.as_json
             if @offer.company
@@ -61,10 +62,23 @@ class Api::V1::OffersController < ApplicationController
         end
     end
 
-    def delete
-        render json: { success: true, id: params[:id] }
+    def destroy
+        if Offer.exists?(params[:id])
+            # if Offer.destroy(params[:id])
+            #     render json: { success: true, id: params[:id] }
+            # else
+            #     render json: { success: false }
+            # end
+            render json: { success: true, id: params[:id] } 
+        else
+            render json: { success: false }
+        end
     end
 
+    def create
+
+    end
+    
     def get_params
         target_column = query_params[:param_name]
         cnames = Offer.columns.map(&:name)
@@ -79,6 +93,12 @@ class Api::V1::OffersController < ApplicationController
     end
     
     private
+    def check_admin
+        unless current_resource_owner.has_role? :admin
+            render json: { success: false , errors: "Only Admin can access" }
+        end
+    end
+
     def query_params
         params.permit(:limit, :offset, :list_id, :param_name,
         :by_annual_refresh,
