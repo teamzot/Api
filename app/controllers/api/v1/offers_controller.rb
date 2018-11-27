@@ -64,19 +64,34 @@ class Api::V1::OffersController < ApplicationController
 
     def destroy
         if Offer.exists?(params[:id])
-            # if Offer.destroy(params[:id])
-            #     render json: { success: true, id: params[:id] }
-            # else
-            #     render json: { success: false }
-            # end
-            render json: { success: true, id: params[:id] } 
+            if Offer.destroy(params[:id])
+                render json: { success: true, id: params[:id] }
+            else
+                render json: { success: false }
+            end
         else
             render json: { success: false }
         end
     end
 
     def create
+        unless company_param
+            render json: { success: false, errors: {company: "company is empty!"} }
+        end
+    
+        if Company.exists?(name: company_param)
+            company = Company.find_by(name: company_param)
+        else
+            company = Company.create(name: company_param)
+        end
 
+        @offer = company.offers.new(offer_params)
+        @offer.offerable = current_resource_owner
+        if @offer.save
+            render json: { success: true, id: @offer.id }
+        else
+            render json: { success: false, errors: @offer.errors }
+        end
     end
     
     def get_params
@@ -93,6 +108,45 @@ class Api::V1::OffersController < ApplicationController
     end
     
     private
+    def company_param
+        params[:offer][:company_name]
+    end
+
+    def offer_params
+        params[:offer][:source_id] = 2
+        # params[:offer][:offerable_type] = "users", 
+        # params[:offer][:offerable_id] = current_resource_owner.id
+
+        params.require(:offer).permit(:post_title,
+        :satisfaction,
+        :annual_refresh,
+        :area,
+        :drgree,
+        :equity,
+        :equity_schedule,
+        :experience,
+        :experience_level,
+        :greencard,
+        :group,
+        :job_function,
+        :job_type,
+        :level,
+        :title,
+        :interest_point,
+        :other_offer,       
+        :position_type,
+        :promotion_package,
+        :season,
+        :url,
+        :year,
+        :base_salary,
+        :relocation_fee_string,
+        :sign_bonus_string,
+        :source_id,
+        :offerable_type,
+        :offerable_id)
+    end
+
     def check_admin
         unless current_resource_owner.has_role? :admin
             render json: { success: false , errors: "Only Admin can access" }

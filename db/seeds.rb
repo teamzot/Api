@@ -8,3 +8,4 @@
 
 # default source
 Source.create(name: "www.1point3acres.com")
+Source.create(name: "admin")

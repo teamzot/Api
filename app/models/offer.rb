@@ -72,4 +72,5 @@ class Offer < ApplicationRecord
 
     belongs_to :company
     belongs_to :offerable, polymorphic: true
+    belongs_to :source
 end
