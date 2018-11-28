@@ -1,6 +1,6 @@
 namespace :import do
     task :csv1 => :environment do
-        filename = "source/DataClean2.csv"
+        filename = "source/new.csv"
         data = SmarterCSV.process(filename)
         data.each do |row|
             annual_refresh = row[:annualrefresh]
@@ -25,7 +25,7 @@ namespace :import do
 
             other_offer = row[:otherlevel]
             position_type = row[:positiontype]
-            post_time = row[:posttime]
+            post_time = row[:posttime].to_i
             post_title = row[:posttitle]
             post_user = row[:postuser]
 
@@ -61,7 +61,7 @@ namespace :import do
 
             if post_time
                 begin
-                    post_time = post_time.to_datetime
+                    post_time = Time.at(post_time)
                 rescue ArgumentError
                     post_time = nil
                 end
