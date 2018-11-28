@@ -5,7 +5,7 @@ namespace :import do
         data.each do |row|
             annual_refresh = row[:annualrefresh]
             area = row[:area]
-            base_salary = row[:basesalaryannualusd]
+            base_salary = row[:basesalary]
 
             company_alt_name = row[:companyaltname]
             company_name = row[:companyname]
