@@ -1,6 +1,6 @@
 class Api::V1::OffersController < ApplicationController
-    before_action :doorkeeper_authorize!, only: [:destroy, :create]
-    before_action :check_admin, only: [:destroy, :create]
+    before_action :doorkeeper_authorize!, only: [:destroy, :create, :update]
+    before_action :check_admin, only: [:destroy, :create, :update]
 
     has_scope :by_annual_refresh
     has_scope :by_area
@@ -94,6 +94,28 @@ class Api::V1::OffersController < ApplicationController
         end
     end
     
+    def update
+        @offer = Offer.find(params[:id])
+
+        if company_param && @offer.company.name != company_param
+            if Company.exists?(name: company_param)
+                company = Company.find_by(name: company_param)
+            else
+                company = Company.create(name: company_param)
+            end
+            @offer.company = company
+            unless @offer.save
+                render json: { success: false, errors: "Company update error" }
+            end
+        end
+
+        if @offer.update_attributes(offer_params)
+            render json: { success: true }
+        else
+            render json: { success: false, errors: @offer.errors }
+        end
+    end
+
     def get_params
         target_column = query_params[:param_name]
         cnames = Offer.columns.map(&:name)
