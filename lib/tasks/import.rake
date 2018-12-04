@@ -34,15 +34,25 @@ namespace :import do
             satisfaction = row[:satisfaction]
             season = row[:season]
             seasonstring = row[:seasonstring]
-            sign_bonus = "0" if row[:signbonus] == "" || row[:signbonus].nil? 
+            if row[:signbonus] == "" || row[:signbonus].nil?
+                sign_bonus = 0
+                sign_bonus_string = "0"
+            else
+                sign_bonus = row[:signbonus].to_i
+                sign_bonus_string = row[:signbonus]
+            end
 
             apply_source = row[:source]
             spider_time = row[:spidertime]
             title = row[:title]
             url = row[:url]
             year = row[:year]
-            yearly_bonus = "0" if row[:yearlybonus] == "" || row[:yearlybonus].nil? 
-            
+            if row[:yearlybonus] == "" || row[:yearlybonus].nil? 
+                yearly_bonus = 0 
+            else
+                yearly_bonus = row[:yearlybonus].to_i
+            end
+
             # process data
             begin
                 base_salary = base_salary.to_i
@@ -106,7 +116,8 @@ namespace :import do
                 satisfaction: satisfaction,
                 season: season,
                 seasonstring: seasonstring,
-                sign_bonus_string: sign_bonus,
+                sign_bonus: sign_bonus,
+                sign_bonus_string: sign_bonus_string,
                 year: year,
                 yearly_bonus: yearly_bonus, 
                 apply_source: apply_source,
