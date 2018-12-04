@@ -31,11 +31,11 @@ class CreateOffers < ActiveRecord::Migration[5.2]
 
       # for salaries
       t.integer "base_salary"
-      t.integer "relocation_fee"
-      t.string "relocation_fee_string"
-      t.integer "sign_bonus"
-      t.string "sign_bonus_string"
-      t.string "yearly_bonus"
+      t.integer "relocation_fee", default: 0
+      t.string "relocation_fee_string", default: "0"
+      t.integer "sign_bonus", default: 0
+      t.string "sign_bonus_string", default: "0"
+      t.string "yearly_bonus", default: "0"
       
       t.string "apply_source"
 
