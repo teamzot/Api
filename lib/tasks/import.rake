@@ -34,14 +34,14 @@ namespace :import do
             satisfaction = row[:satisfaction]
             season = row[:season]
             seasonstring = row[:seasonstring]
-            sign_bonus = "0" if row[:signbonus] == ""
+            sign_bonus = "0" if row[:signbonus] == "" || row[:signbonus].nil? 
 
             apply_source = row[:source]
             spider_time = row[:spidertime]
             title = row[:title]
             url = row[:url]
             year = row[:year]
-            yearly_bonus = "0" if row[:yearlybonus] == ""
+            yearly_bonus = "0" if row[:yearlybonus] == "" || row[:yearlybonus].nil? 
             
             # process data
             begin
