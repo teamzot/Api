@@ -32,15 +32,16 @@ namespace :import do
             promotion_pkg = row[:promotionpkg]
             relocation_fee = row[:relocationfee]
             satisfaction = row[:satisfaction]
-            season = row[:seasonstring]
-            sign_bonus = row[:signbonus]
+            season = row[:season]
+            seasonstring = row[:seasonstring]
+            sign_bonus = "0" if !row[:signbonus]
 
             apply_source = row[:source]
             spider_time = row[:spidertime]
             title = row[:title]
             url = row[:url]
             year = row[:year]
-            yearly_bonus = row[:yearlybonus]
+            yearly_bonus = "0" if !row[:yearlybonus]
             
             # process data
             begin
@@ -55,9 +56,9 @@ namespace :import do
             level = level.to_i
 
             # remove month
-            # if season
-            #     season = season[0..-2]
-            # end
+            if season
+                season = season[0..-2]
+            end
 
             if post_time
                 begin
@@ -104,6 +105,7 @@ namespace :import do
                 relocation_fee_string: relocation_fee,
                 satisfaction: satisfaction,
                 season: season,
+                seasonstring: seasonstring,
                 sign_bonus_string: sign_bonus,
                 year: year,
                 yearly_bonus: yearly_bonus, 

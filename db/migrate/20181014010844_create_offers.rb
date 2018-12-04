@@ -23,7 +23,8 @@ class CreateOffers < ActiveRecord::Migration[5.2]
       t.datetime "post_time"
       t.string "promotion_package"
       t.string "season"
-
+      t.string "seasonstring"
+    
       t.datetime "spider_time"
       t.text "url"
       t.integer "year"
