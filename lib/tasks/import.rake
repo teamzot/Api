@@ -1,6 +1,6 @@
 namespace :import do
     task :csv1 => :environment do
-        filename = "source/new.csv"
+        filename = "source/DataCleanNov28.csv"
         data = SmarterCSV.process(filename)
         data.each do |row|
             annual_refresh = row[:annualrefresh]
@@ -32,7 +32,7 @@ namespace :import do
             promotion_pkg = row[:promotionpkg]
             relocation_fee = row[:relocationfee]
             satisfaction = row[:satisfaction]
-            season = row[:season]
+            season = row[:seasonstring]
             sign_bonus = row[:signbonus]
 
             apply_source = row[:source]
@@ -55,9 +55,9 @@ namespace :import do
             level = level.to_i
 
             # remove month
-            if season
-                season = season[0..-2]
-            end
+            # if season
+            #     season = season[0..-2]
+            # end
 
             if post_time
                 begin
